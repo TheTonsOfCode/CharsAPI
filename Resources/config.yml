@@ -38,6 +38,22 @@ language: EN
 max_font_size: 30
 
 #====#
+# Character which you set before and after CharsVariable
+# on example: %online%
+#====#
+
+variable_character: '%'
+
+#====#
+# List of character replaced to materials
+# Pattern CHARACTER:MATERIAL
+#====#
+
+char_to_material: 
+    - 'N:TNT'
+    - 'O:PACKED_ICE'
+
+#====#
 # How many blocks over player will be builded chars
 #====#
 

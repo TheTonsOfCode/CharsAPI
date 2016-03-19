@@ -13,6 +13,7 @@ import pl.merbio.charsapi.commands.sub.FontsContent;
 import pl.merbio.charsapi.commands.sub.ListSubCommand;
 import pl.merbio.charsapi.commands.sub.TestSubCommand;
 import pl.merbio.charsapi.commands.sub.UpdaterSubCommand;
+import pl.merbio.charsapi.commands.sub.VarsSubCommand;
 import pl.merbio.charsapi.other.Lang;
 
 public class CharsCommand implements CommandExecutor{
@@ -24,6 +25,7 @@ public class CharsCommand implements CommandExecutor{
         FontsContent.reg();
         
         subCommands.add(new AnimationSubCommand());
+        subCommands.add(new VarsSubCommand());
         subCommands.add(new ListSubCommand());
         subCommands.add(new BuildSubCommand());
         subCommands.add(new ClearSubCommand());

@@ -9,64 +9,87 @@ import pl.merbio.charsapi.listeners.FallingBlocksListeners;
 import pl.merbio.charsapi.managers.FileManager;
 import pl.merbio.charsapi.managers.UpdatersManager;
 import pl.merbio.charsapi.objects.CharsBuilder;
+import pl.merbio.charsapi.objects.CharsVariable;
 import pl.merbio.charsapi.other.Message;
 import pl.merbio.utilities.Metrics;
 import pl.merbio.charsapi.other.Settings;
 import pl.merbio.utilities.commands.CommandManager;
 
-public class Main extends JavaPlugin{
-    
+public class Main extends JavaPlugin {
+
     private static CharsBuilder builder;
     private Metrics metrics;
-    
+
     private static Main instance;
-    
-    public static Main getInstance(){
+
+    public static Main getInstance() {
         return instance;
     }
-    
-    public void onEnable(){
+
+    public void onEnable() {
         this.instance = this;
         metrics = new Metrics(this);
-        
+
         builder = new CharsBuilder();
-        
+
         new Message(this);
         new Settings(this);
-        new FileManager(this);        
-        
+        new FileManager(this);
+
+        registerCharsVariables();
+
         getServer().getScheduler().runTaskLater(this, new Runnable() {
             @Override
             public void run() {
-                getCommand("chars").setExecutor(new CharsCommand()); 
+                getCommand("chars").setExecutor(new CharsCommand());
                 Message.console("Command loaded.");
             }
-        }, 40L);          
-        
+        }, 40L);
+
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new FallingBlocksListeners(), this);
-        
+
         FallingBlocksListeners.checkBlocksAreLiving();
-        
+
         CommandManager.registerCommand(new DropBlockTestCMD());
     }
-    
-    public void onDisable(){
+
+    public void onDisable() {
         FallingBlocksListeners.clearBlocks();
-        try{
+        try {
             UpdatersManager.stopAllUpdaters();
-        }catch(Exception e){}
+        } catch (Exception e) {
+        }
     }
-    
-    public static CharsBuilder getMainBuilder(){
+
+    private void registerCharsVariables() {
+        CharsBuilder.addCharsVariables(
+                new CharsVariable("Merbio", "author"),
+                new CharsVariable(new CharsVariable.onVarCheck() {
+                    @Override
+                    public String on() {
+                        return String.valueOf(getServer().getOnlinePlayers().length);
+                    }
+                }, "online", "on"),
+                new CharsVariable(new CharsVariable.onVarCheck() {
+                    @Override
+                    public String on() {
+                        return String.valueOf(getServer().getMaxPlayers());
+                    }
+                }, "maxplayers", "maxpl"),
+                new CharsVariable("", "rebuildInUpdaterEveryTime", "riuet")
+        );
+    }
+
+    public static CharsBuilder getMainBuilder() {
         return builder;
     }
-    
-    public static void setBuilderFont(String name, int bold, int size){
+
+    public static void setBuilderFont(String name, int bold, int size) {
         builder.setBlockSettings(builder.getBlockSettings().setFont(new Font(name, bold, size)));
     }
-    
-    public static void setDefaultBuilderFont(){
+
+    public static void setDefaultBuilderFont() {
         builder.setBlockSettings(builder.getBlockSettings().setFont(null));
     }
 }

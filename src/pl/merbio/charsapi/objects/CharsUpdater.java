@@ -39,13 +39,17 @@ public class CharsUpdater {
 
         if (actualChars != -1) {
             lcs = chars.get(actualChars);
-            lcs.cs.clearChars(!lcs.cs.getInputAnimation().isRunning());
+            boolean b = false;
+            if (lcs.cs.hasInputAnimation()) {
+                b = !lcs.cs.getInputAnimation().isRunning();
+            }
+            lcs.cs.clearChars(b);
 
             if (lcs.cs.hasOutputAnimation()) {
                 wait = lcs.cs.getOutputAnimation().getWaitingTime();
             }
         }
-        
+
         task = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
             @Override
             public void run() {
@@ -69,8 +73,14 @@ public class CharsUpdater {
 
         CharsBuilder cb = Main.getMainBuilder();
         CharsString cs = lcs.cs;
-        cb.build(location, bf, cs);
-                
+        if(cs.hasVarsInText()) {
+            lcs.cs = cb.replace(bf, cs.getString());
+            chars.set(actualChars, lcs);
+            cb.build(location, lcs.cs);
+        } else {
+            cb.build(location, bf, cs);
+        }
+
         task = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
             @Override
             public void run() {
@@ -191,7 +201,6 @@ public class CharsUpdater {
         return task != null;
     }
 }
-
 
 //        task = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 //            @Override

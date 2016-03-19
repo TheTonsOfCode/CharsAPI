@@ -19,6 +19,7 @@ public class BlockSettings {
     private char inputAnimationChar;
     private char outputAnimationChar;
     private char overlineChar;
+    private char varChar;
     private HashMap<Character, DyeColor> colors;
     private HashMap<Character, Material> by_colors_materials;
     private boolean onlyAirBlocade;
@@ -34,6 +35,7 @@ public class BlockSettings {
         this.inputAnimationChar = '@';
         this.outputAnimationChar = '!';
         this.overlineChar = '$';
+        this.varChar = '%';
         this.colors = Content.colors;
         this.by_colors_materials = Content.by_colors_materials;
         this.onlyAirBlocade = true;
@@ -99,9 +101,18 @@ public class BlockSettings {
         this.overlineChar = overlineChar;
         return this;
     }
+    
+    public BlockSettings setVarChar(char varChar) throws AleradyReservedCharacterException {
+        if (isReservedCharacter(varChar)) {
+            throw new AleradyReservedCharacterException(varChar);
+        }
+
+        this.varChar = varChar;
+        return this;
+    }
 
     public BlockSettings addMaterialReplacement(char replacement, Material material) throws StaticColorCharacterException {
-        if (isStaticColorCharacter(colorChar)) {
+        if (isStaticColorCharacter(replacement)) {
             throw new StaticColorCharacterException(replacement);
         }
 
@@ -165,6 +176,10 @@ public class BlockSettings {
 
     public char getOverlineChar() {
         return overlineChar;
+    }
+    
+    public char getVarChar() {
+        return varChar;
     }
 
     public HashMap<Character, Material> getMaterialReplacementList() {
@@ -239,6 +254,10 @@ public class BlockSettings {
         }
         
         if (isResrvC(c, overlineChar)) {
+            return true;
+        }
+        
+        if (isResrvC(c, varChar)) {
             return true;
         }
 

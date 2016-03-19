@@ -22,12 +22,14 @@ public class CharsString {
     private OutputAnimation outputAnimation;
     private ArrayList<CharsString> subChars;
     private CharsMaterial overlineMaterial;
+    protected int varsInText;
 
     public CharsString(BlockFace facing, String string, CharsBlock[][] blocks) {
         this.facing = facing;
         this.string = string;
         this.blocks = blocks;
         this.subChars = new ArrayList<>();
+        this.varsInText = 0;
     }
 
     public BlockFace getFacing() {
@@ -72,6 +74,10 @@ public class CharsString {
 
     public CharsMaterial getOverlineMaterial() {
         return overlineMaterial;
+    }
+    
+    public boolean hasVarsInText() {
+        return varsInText > 0;
     }
 
     public boolean hasInputAnimation() {

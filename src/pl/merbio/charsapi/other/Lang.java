@@ -124,7 +124,9 @@ public class Lang {
             FONT_TYPE_BOLD,
             FONT_TYPE_ITALIC,
             LIST_UNREACHED_PAGE,
-            LIST_PAGE_INFO;
+            LIST_PAGE_INFO,
+            VARS_EXAMPLE_USE,
+            VARS_EXAMPLE_PREFIX;
 
     public static String U_ADD_CHARS_ADDED,
             U_CREATE_ALERADY_EXIST_UPDATER,
@@ -154,6 +156,7 @@ public class Lang {
             U_TPTO_COMPLETE;
 
     public static String CMD_DESC_ANIMATION,
+            CMD_DESC_VARS,
             CMD_DESC_BUILD,
             CMD_DESC_CLEAR,
             CMD_DESC_FONT,
