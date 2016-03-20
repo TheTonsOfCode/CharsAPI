@@ -48,6 +48,7 @@ import java.net.URLEncoder;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
+import pl.merbio.charsapi.nms.NMSUtil;
 
 public class MetricsLite {
 
@@ -287,7 +288,7 @@ public class MetricsLite {
         boolean onlineMode = Bukkit.getServer().getOnlineMode(); // TRUE if online mode is enabled
         String pluginVersion = description.getVersion();
         String serverVersion = Bukkit.getVersion();
-        int playersOnline = Bukkit.getServer().getOnlinePlayers().length;
+        int playersOnline = NMSUtil.getOnlinePlayersSize();
 
         // END server software specific section -- all code below does not use any code outside of this class / Java
         // Construct the post data

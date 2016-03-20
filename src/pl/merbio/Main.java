@@ -2,12 +2,16 @@ package pl.merbio;
 
 import pl.merbio.charsapi.commands.CharsCommand;
 import java.awt.Font;
+import java.util.Collection;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.merbio.charsapi.commands.DropBlockTestCMD;
 import pl.merbio.charsapi.listeners.FallingBlocksListeners;
 import pl.merbio.charsapi.managers.FileManager;
 import pl.merbio.charsapi.managers.UpdatersManager;
+import pl.merbio.charsapi.nms.NMSUtil;
 import pl.merbio.charsapi.objects.CharsBuilder;
 import pl.merbio.charsapi.objects.CharsVariable;
 import pl.merbio.charsapi.other.Message;
@@ -68,17 +72,12 @@ public class Main extends JavaPlugin {
                 new CharsVariable(new CharsVariable.onVarCheck() {
                     @Override
                     public String on() {
-                        return String.valueOf(getServer().getOnlinePlayers().length);
-                    }
-                }, "online", "on"),
-                new CharsVariable(new CharsVariable.onVarCheck() {
-                    @Override
-                    public String on() {
                         return String.valueOf(getServer().getMaxPlayers());
                     }
                 }, "maxplayers", "maxpl"),
                 new CharsVariable("", "rebuildInUpdaterEveryTime", "riuet")
         );
+        NMSUtil.registerOnlineCharsVariable();
     }
 
     public static CharsBuilder getMainBuilder() {
@@ -101,3 +100,14 @@ public class Main extends JavaPlugin {
 //            this.getLogger().info("Jest dostepna nowa wersja pluginu: " + uc.getVersion());
 //            this.getLogger().info("Pobierz z tad: " + uc.getLink());
 //        }
+
+//        new CharsVariable(new CharsVariable.onVarCheck() {
+//            @Override
+//            public String on() {
+//                Object online = getServer().getOnlinePlayers();
+//                if (online instanceof Collection) {
+//                    return String.valueOf(((Collection) online).size());
+//                }
+//                return String.valueOf(((Player[]) online).length);
+//            }
+//        }, "online", "on"),
