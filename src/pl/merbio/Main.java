@@ -2,9 +2,7 @@ package pl.merbio;
 
 import pl.merbio.charsapi.commands.CharsCommand;
 import java.awt.Font;
-import java.util.Collection;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
+import java.math.BigDecimal;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.merbio.charsapi.commands.DropBlockTestCMD;
@@ -17,6 +15,7 @@ import pl.merbio.charsapi.objects.CharsVariable;
 import pl.merbio.charsapi.other.Message;
 import pl.merbio.utilities.Metrics;
 import pl.merbio.charsapi.other.Settings;
+import pl.merbio.utilities.TpsMeter;
 import pl.merbio.utilities.commands.CommandManager;
 
 public class Main extends JavaPlugin {
@@ -56,6 +55,8 @@ public class Main extends JavaPlugin {
         FallingBlocksListeners.checkBlocksAreLiving();
 
         CommandManager.registerCommand(new DropBlockTestCMD());
+
+        new TpsMeter().runTaskTimer(this, 0, 1);
     }
 
     public void onDisable() {
@@ -75,6 +76,20 @@ public class Main extends JavaPlugin {
                         return String.valueOf(getServer().getMaxPlayers());
                     }
                 }, "maxplayers", "maxpl"),
+                new CharsVariable(new CharsVariable.onVarCheck() {
+                    @Override
+                    public String on() {
+                        return String.valueOf(new BigDecimal(TpsMeter.tps).setScale(1, BigDecimal.ROUND_HALF_UP)
+                                .doubleValue());
+                    }
+                }, "tps"),
+                new CharsVariable(new CharsVariable.onVarCheck() {
+                    @Override
+                    public String on() {
+                        return String.valueOf(new BigDecimal(TpsMeter.tps).setScale(1, BigDecimal.ROUND_HALF_UP)
+                                .doubleValue() + " / 19.0");
+                    }
+                }, "fulltps", "ftps"),
                 new CharsVariable("", "rebuildInUpdaterEveryTime", "riuet")
         );
         NMSUtil.registerOnlineCharsVariable();
@@ -100,7 +115,6 @@ public class Main extends JavaPlugin {
 //            this.getLogger().info("Jest dostepna nowa wersja pluginu: " + uc.getVersion());
 //            this.getLogger().info("Pobierz z tad: " + uc.getLink());
 //        }
-
 //        new CharsVariable(new CharsVariable.onVarCheck() {
 //            @Override
 //            public String on() {

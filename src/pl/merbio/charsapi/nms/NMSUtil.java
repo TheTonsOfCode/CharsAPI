@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import pl.merbio.charsapi.objects.CharsBuilder;
 import pl.merbio.charsapi.objects.CharsVariable;
-import pl.merbio.utilities.commands.CommandManager;
 
 public class NMSUtil {
 
@@ -69,7 +68,7 @@ public class NMSUtil {
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-
+ 
         return 0;
     }
 }
