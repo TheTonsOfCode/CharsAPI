@@ -18,6 +18,7 @@ import pl.merbio.charsapi.other.Settings;
 import pl.merbio.utilities.TpsMeter;
 import pl.merbio.utilities.commands.CommandManager;
 
+//Test push commit
 public class Main extends JavaPlugin {
 
     private static CharsBuilder builder;
